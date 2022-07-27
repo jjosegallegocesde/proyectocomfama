@@ -1,0 +1,34 @@
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
+
+let boton=document.getElementById("boton")
+
+//escucho clic en el boton de registro
+boton.addEventListener("click",function(evento){
+
+    //EVITO QUE EL FORMUALRIO SE REINICIE
+    evento.preventDefault()
+
+    //capturo lo que escriben en acda caja del formulario
+    let email=document.getElementById("email").value
+    let password=document.getElementById("password").value
+    console.log(email,password)
+
+    //me autentico ante firebase
+    const auth = getAuth();
+    //SE LLAMA A LA PROMESA CREATEUSER
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => { //si todo sale bien
+        // Signed in
+        const user = userCredential.user;
+        console.log(userCredential)
+        alert("exito en el registro, bienvenido")
+        // ...
+    })
+    .catch((error) => { //si fallamos
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("upss fallamos "+errorMessage)
+        // ..
+    });
+
+})
