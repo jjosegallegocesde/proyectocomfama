@@ -1,6 +1,7 @@
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
+import { getAuth, createUserWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
 
 let boton=document.getElementById("boton")
+let botonSalir=document.getElementById("boton2")
 
 //escucho clic en el boton de registro
 boton.addEventListener("click",function(evento){
@@ -19,9 +20,11 @@ boton.addEventListener("click",function(evento){
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => { //si todo sale bien
         // Signed in
-        const user = userCredential.user;
+        const user = userCredential.user.email;
         console.log(userCredential)
+        
         alert("exito en el registro, bienvenido")
+        window.location.href='./registro.html'
         // ...
     })
     .catch((error) => { //si fallamos
@@ -29,6 +32,17 @@ boton.addEventListener("click",function(evento){
         const errorMessage = error.message;
         alert("upss fallamos "+errorMessage)
         // ..
+    });
+
+})
+
+botonSalir.addEventListener("click",function(){
+
+    const auth = getAuth();
+    signOut(auth).then(() => {
+    // Sign-out successful.
+    }).catch((error) => {
+    // An error happened.
     });
 
 })
